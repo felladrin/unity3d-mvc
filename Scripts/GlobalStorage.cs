@@ -7,16 +7,13 @@ public class GlobalStorage : MonoBehaviour
 	// For example: Health, Score, Kills.
 
 	#region Singleton definition
-	static GlobalStorage instance;
+	public static GlobalStorage Instance { get; private set; }
 
-	public static GlobalStorage Instance {
-		get { return instance; }
-	}
-
-	void GrantSingleInstance() {
-		if (instance == null)
-			instance = this;
-		else if (instance != this)
+	void GrantSingleInstance ()
+	{
+		if (Instance == null)
+			Instance = this;
+		else if (Instance != this)
 			Destroy (gameObject);
 	}
 	#endregion
