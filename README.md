@@ -15,3 +15,8 @@ On the root of "Scripts" folder you find the base scripts to link to those game 
 - -- Model (ModelContainer.cs)
 - -- View (ViewContainer.cs)
 - -- Controller (ControllerContainer.cs)
+
+
+## The containers
+
+The game objects "Model", "View", "Controller" are containers for any other scripts you create inheriting the MvcBehaviour class, which is mandatorily a model, a view or a controller. (Examples coming soon)
