@@ -20,3 +20,8 @@ On the root of "Scripts" folder you find the base scripts to link to those game 
 ## The containers
 
 The game objects "Model", "View", "Controller" are containers for any other scripts you create inheriting the MvcBehaviour class, which is mandatorily a model, a view or a controller. (Examples coming soon)
+
+
+## Separation in Models, Views and Controllers
+
+In summary, _Models_ hold the data structure, _Views_ hold the references of game objects on scene and _Controllers_ control how the objects will behave on scene, using the data from models and the references from views.
