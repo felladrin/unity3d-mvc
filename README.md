@@ -4,7 +4,7 @@ Basic scripts for creating Unity games following MVC patterns. The concept is ba
 
 I've made some changes to fit my needs. Those are the scripts I use when starting a new Unity project. And here is how it's structured on the scene hierarchy:
 
-![screenshot](screenshot.png)
+![](screenshots/1.png)
 
 ## Linking the scripts
 
@@ -16,11 +16,17 @@ On the root of "Scripts" folder you find the base scripts to link to those game 
 - -- View (ViewContainer.cs)
 - -- Controller (ControllerContainer.cs)
 
-
 ## The containers
 
-The game objects "Model", "View", "Controller" are containers for any other scripts you create inheriting the MvcBehaviour class, which is mandatorily a model, a view or a controller. (Examples coming soon)
+The game objects "Model", "View", "Controller" are containers for any other scripts you create inheriting the MvcBehaviour class, which is mandatorily a model, a view or a controller.
 
+Here is an example of how you would add controllers to the Controller Container:
+
+![](screenshots/2.png)
+
+![](screenshots/3.png)
+
+Note that TimeController, DoorController, AlertController and InvestmentAreaBarsController are all derived from MvcBehaviour too. And those scripts are attached to their related game objects on scene - children of the Controller game object.
 
 ## Separation in Models, Views and Controllers
 
