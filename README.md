@@ -30,4 +30,19 @@ Note that TimeController, DoorController, AlertController and InvestmentAreaBars
 
 ## Separation in Models, Views and Controllers
 
-In summary, _Models_ hold the data structure, _Views_ hold the references of game objects on scene and _Controllers_ control how the objects will behave on scene, using the data from models and the references from views.
+In summary, _Models_ hold the data structure and current values, _Views_ hold the references of game objects on scene and _Controllers_ control how the objects will behave on scene, using the data from models and the references from views.
+
+## The GlobalStorage - Passing values/objets through scenes
+
+Now you might be asking: "If my game has more than one scene, do I need to crate a MVC structure in all scenes? If so, do I have to reinitialize the game objects everytime? Then, how to I keep the state of my game through the scenes?"
+
+Yes, you'll need to create the same structure on all scenes, and yes, you'll lose the data from the scripts on your game objects.
+
+That's why we need the GlobalStorage. It has a singleton implementation, so even if place the GlobalStorage on all scenes, it will alawys keep only one instance (deleting the others). And it'll be available on all scenes. So all you need to do is to declare the properties it should hold (e.g. int, string, GameObject, enum).
+
+And why not just simply use a static class for that? Because then you'd need to use the debugger to check what's being saved or not on that class. And that's not good at all for those who are not programmers. Using the GlobalStorage allows anyone to check if the values are being correclty saved on the game object throug Unity's Inspector Window!
+
+## License
+
+The MIT License  
+<http://victor.mit-license.org>
