@@ -6,15 +6,19 @@ I've made some changes to fit my needs. Those are the scripts I use when startin
 
 ![](screenshots/1.png)
 
+## Minimum Requirements
+
+Unity version 5.3.5f1, released 15 Mar 2016.
+
 ## Linking the scripts
 
 On the root of "Scripts" folder you find the base scripts to link to those game objects of the screenshot above:
 
 - GlobalStorage (GlobalStorage.cs)
 - Application (Application.cs)
-- -- Model (ModelContainer.cs)
-- -- View (ViewContainer.cs)
-- -- Controller (ControllerContainer.cs)
+  - Model (ModelContainer.cs)
+  - View (ViewContainer.cs)
+  - Controller (ControllerContainer.cs)
 
 ## The containers
 
@@ -38,9 +42,9 @@ Now you might be asking: "If my game has more than one scene, do I need to crate
 
 Yes, you'll need to create the same structure on all scenes, and yes, you'll lose the data from the scripts on your game objects.
 
-That's why we need the GlobalStorage. It has a singleton implementation, so even if place the GlobalStorage on all scenes, it will alawys keep only one instance (deleting the others). And it'll be available on all scenes. So all you need to do is to declare the properties it should hold (e.g. int, string, GameObject, enum).
+That's why we need the GlobalStorage. It has a singleton implementation, so even if place the GlobalStorage on all scenes, it will alawys keep only one instance (deleting the others). And it'll be available on all scenes. Using the GlobalStorage allows anyone to check if the values are being correclty saved on the game object throug Unity's Inspector Window!
 
-And why not just simply use a static class for that? Because then you'd need to use the debugger to check what's being saved or not on that class. And that's not good at all for those who are not programmers. Using the GlobalStorage allows anyone to check if the values are being correclty saved on the game object throug Unity's Inspector Window!
+> Usage instructions coming soon.
 
 ## License
 
