@@ -1,6 +1,6 @@
 ﻿public class ViewContainer : MvcBehaviour
 {
-	public CharacterView Character;
+	public PlayerView Player;
 	// Register here all other Views, for example:
 	// TimeView, ItemView, MenuView...
 }
