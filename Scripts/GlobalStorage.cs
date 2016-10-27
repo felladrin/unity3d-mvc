@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -203,7 +203,7 @@ public class GlobalStorage : MonoBehaviour
         if (String.IsNullOrEmpty(fileName))
             return null;
 
-        return System.IO.Path.Combine(Application.persistentDataPath, fileName + ".json");
+        return System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, fileName + ".json");
     }
 
     static bool TypeCodeIsNumeric(Type type)
@@ -256,7 +256,7 @@ public class GlobalStorage : MonoBehaviour
             {
                 string serializedData = File.ReadAllText(savePath);
                 JsonUtility.FromJsonOverwrite(serializedData, instance);
-                FileInfo[] fileArray = new DirectoryInfo(Application.persistentDataPath).GetFiles("*.json");
+                FileInfo[] fileArray = new DirectoryInfo(UnityEngine.Application.persistentDataPath).GetFiles("*.json");
                 foreach (FileInfo fileInfo in fileArray)
                 {
                     string fileName = fileInfo.Name.Replace(".json", "");
