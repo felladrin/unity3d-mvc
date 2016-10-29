@@ -47,13 +47,32 @@ public class GlobalStorage : MonoBehaviour
         }
     }
 
+    [Serializable]
+    private class GlobalStorageObject
+    {
+        [HideInInspector] public string Key;
+        [TextArea(3, 10)] [SerializeField] private string value;
+
+        private string Value
+        {
+            get { return value; }
+            set { this.value = value; }
+        }
+
+        public GlobalStorageObject(string key, string value)
+        {
+            Key = key;
+            Value = value;
+        }
+    }
+
     [SerializeField] private List<GlobalStorageNumber> numbers = new List<GlobalStorageNumber>();
 
     [SerializeField] private List<GlobalStorageString> strings = new List<GlobalStorageString>();
 
     [SerializeField] private List<GlobalStorageBoolean> booleans = new List<GlobalStorageBoolean>();
 
-    [SerializeField] private List<string> objects = new List<string>();
+    [SerializeField] private List<GlobalStorageObject> objects = new List<GlobalStorageObject>();
 
     #region Singleton definition
 
@@ -107,10 +126,19 @@ public class GlobalStorage : MonoBehaviour
 
             try
             {
-                if (!key.Equals(GetSelfName()) && !instance.objects.Contains(key))
-                    instance.objects.Add(key);
-
                 var serializedData = JsonUtility.ToJson(data, true);
+                if (key.Equals(GetSelfName()))
+                {
+                    var globalStorage = (GlobalStorage) (object) data;
+                    var objectsBeforeSaving = new List<GlobalStorageObject>(globalStorage.objects);
+                    globalStorage.objects = null;
+                    serializedData = JsonUtility.ToJson(data, true);
+                    globalStorage.objects = objectsBeforeSaving;
+                }
+                else
+                {
+                    instance.objects.Add(new GlobalStorageObject(key, serializedData));
+                }
                 File.WriteAllText(savePath, serializedData);
                 DebugMessage("Data stored to " + savePath);
             }
@@ -181,8 +209,8 @@ public class GlobalStorage : MonoBehaviour
             else
             {
                 var savePath = GetSavePath(key);
+                instance.objects.RemoveAll(x => x.Key == key);
                 if (!File.Exists(savePath)) return;
-                instance.objects.Remove(key);
                 File.Delete(savePath);
             }
         }
@@ -235,14 +263,17 @@ public class GlobalStorage : MonoBehaviour
             var debugModeBeforeLoading = instance.DebugMode;
             JsonUtility.FromJsonOverwrite(serializedData, instance);
             instance.DebugMode = debugModeBeforeLoading;
+            DebugMessage("Data loaded from " + savePath);
             var fileArray = new DirectoryInfo(UnityEngine.Application.persistentDataPath).GetFiles("*.json");
             foreach (var fileInfo in fileArray)
             {
                 var fileName = fileInfo.Name.Replace(".json", "");
-                if (!fileName.Equals(selfName) && !instance.objects.Contains(fileName))
-                    instance.objects.Add(fileName);
+                if (fileName.Equals(selfName)) continue;
+                var fileSavePath = GetSavePath(fileName);
+                var fileSerializedData = File.ReadAllText(fileSavePath);
+                instance.objects.Add(new GlobalStorageObject(fileName, fileSerializedData));
+                DebugMessage("Data loaded from " + fileSavePath);
             }
-            DebugMessage("Data loaded from " + savePath);
         }
         catch (Exception ex)
         {
