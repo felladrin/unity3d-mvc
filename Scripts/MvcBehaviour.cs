@@ -2,16 +2,10 @@
 
 public class MvcBehaviour : MonoBehaviour
 {
-    Application app;
+    private Application app;
 
     protected Application App
     {
-        get
-        {
-            if (app == null)
-                app = Object.FindObjectOfType<Application>();
-
-            return app;
-        }
+        get { return app ?? (app = FindObjectOfType<Application>()); }
     }
 }
