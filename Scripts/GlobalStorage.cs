@@ -8,6 +8,14 @@ public class GlobalStorage : MonoBehaviour
 {
     public bool DebugMode;
 
+    [SerializeField] private string filePath;
+
+    public string FilePathPath
+    {
+        get { return filePath; }
+        private set { filePath = value; }
+    }
+
     [Serializable]
     private class GlobalStorageNumber
     {
@@ -52,6 +60,7 @@ public class GlobalStorage : MonoBehaviour
     {
         [HideInInspector] public string Key;
         [TextArea(3, 10)] [SerializeField] private string value;
+        [SerializeField] private string filePath;
 
         private string Value
         {
@@ -59,10 +68,17 @@ public class GlobalStorage : MonoBehaviour
             set { this.value = value; }
         }
 
+        private string FilePath
+        {
+            get { return filePath; }
+            set { filePath = value; }
+        }
+
         public GlobalStorageObject(string key, string value)
         {
             Key = key;
             Value = value;
+            FilePath = GetSavePath(key);
         }
     }
 
@@ -73,15 +89,25 @@ public class GlobalStorage : MonoBehaviour
     [SerializeField] private List<GlobalStorageBoolean> booleans = new List<GlobalStorageBoolean>();
 
     [SerializeField] private List<GlobalStorageObject> objects = new List<GlobalStorageObject>();
+    private string _file1;
 
     #region Singleton definition
 
     private static GlobalStorage instance;
 
+    private static void SelfInstantiateInCurrentScene()
+    {
+        if (GameObject.Find(GetSelfName()) != null) return;
+        var newGlobalStorage = new GameObject().AddComponent<GlobalStorage>();
+        newGlobalStorage.name = GetSelfName();
+    }
+
     private void GrantSingleInstance()
     {
         if (instance == null)
+        {
             instance = this;
+        }
         else if (instance != this)
             Destroy(gameObject);
     }
@@ -90,6 +116,7 @@ public class GlobalStorage : MonoBehaviour
 
     private void Awake()
     {
+        FilePathPath = GetSavePath(GetSelfName());
         GrantSingleInstance();
         DontDestroyOnLoad(gameObject);
         LoadSelf();
@@ -97,6 +124,8 @@ public class GlobalStorage : MonoBehaviour
 
     public static void Save<T>(string key, T data)
     {
+        SelfInstantiateInCurrentScene();
+
         if (string.IsNullOrEmpty(key))
             return;
 
@@ -151,6 +180,8 @@ public class GlobalStorage : MonoBehaviour
 
     public static T Load<T>(string key)
     {
+        SelfInstantiateInCurrentScene();
+
         var data = default(T);
 
         if (string.IsNullOrEmpty(key))
@@ -196,6 +227,8 @@ public class GlobalStorage : MonoBehaviour
 
     public static void Delete(string key)
     {
+        SelfInstantiateInCurrentScene();
+
         if (string.IsNullOrEmpty(key))
             return;
 
