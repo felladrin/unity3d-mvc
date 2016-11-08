@@ -12,6 +12,7 @@ public class Application : MonoBehaviour
 
     /// <summary>
     /// Add listener to a given event.
+    /// Usage: Call it inside OnEnable() method of MonoBehaviours.
     /// </summary>
     /// <param name="eventName">Name of the event.</param>
     /// <param name="listener">Callback function.</param>
@@ -32,6 +33,7 @@ public class Application : MonoBehaviour
 
     /// <summary>
     /// Remove listener from a given event.
+    /// Usage: Call it inside OnDisable() method of MonoBehaviours.
     /// </summary>
     /// <param name="eventName">Name of the event.</param>
     /// <param name="listener">Callback function.</param>
