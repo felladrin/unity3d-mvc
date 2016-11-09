@@ -98,8 +98,7 @@ public class GlobalStorage : MonoBehaviour
     private static void SelfInstantiateInCurrentScene()
     {
         if (GameObject.Find(GetSelfName()) != null) return;
-        var newGlobalStorage = new GameObject().AddComponent<GlobalStorage>();
-        newGlobalStorage.name = GetSelfName();
+        new GameObject {name = GetSelfName()}.AddComponent<GlobalStorage>();
     }
 
     private void GrantSingleInstance()
@@ -173,7 +172,7 @@ public class GlobalStorage : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogWarning(ex.Message);
+                Debug.LogException(ex);
             }
         }
     }
@@ -218,7 +217,7 @@ public class GlobalStorage : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogWarning(ex.Message);
+            Debug.LogException(ex);
         }
 
         return data;
@@ -249,7 +248,7 @@ public class GlobalStorage : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogWarning(ex.Message);
+            Debug.LogException(ex);
         }
     }
 
@@ -257,7 +256,7 @@ public class GlobalStorage : MonoBehaviour
     {
         return string.IsNullOrEmpty(fileName)
             ? null
-            : Path.Combine(UnityEngine.Application.persistentDataPath, fileName + ".json");
+            : Path.Combine(Application.persistentDataPath, fileName + ".json");
     }
 
     private static bool TypeCodeIsNumeric(Type type)
@@ -297,7 +296,7 @@ public class GlobalStorage : MonoBehaviour
             JsonUtility.FromJsonOverwrite(serializedData, instance);
             instance.DebugMode = debugModeBeforeLoading;
             DebugMessage("Data loaded from " + savePath);
-            var fileArray = new DirectoryInfo(UnityEngine.Application.persistentDataPath).GetFiles("*.json");
+            var fileArray = new DirectoryInfo(Application.persistentDataPath).GetFiles("*.json");
             foreach (var fileInfo in fileArray)
             {
                 var fileName = fileInfo.Name.Replace(".json", "");
@@ -310,7 +309,7 @@ public class GlobalStorage : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogWarning(ex.Message);
+            Debug.LogException(ex);
         }
     }
 
