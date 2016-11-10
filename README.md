@@ -6,15 +6,10 @@ I've made some changes to fit my needs. Those are the scripts I use when startin
 
 ![](screenshots/1.png)
 
-## Minimum Requirements
-
-Unity version 5.3.5f1, released 15 Mar 2016.
-
 ## Linking the scripts
 
 On the root of "Scripts" folder you find the base scripts to link to those game objects of the screenshot above:
 
-- GlobalStorage (GlobalStorage.cs)
 - Application (Application.cs)
   - Model (ModelContainer.cs)
   - View (ViewContainer.cs)
@@ -42,36 +37,9 @@ Now you might be asking: "If my game has more than one scene, do I need to crate
 
 Yes, you need to create the same structure on all scenes, and yes, you lose the data from the scripts on your game objects.
 
-That's where the GlobalStorage comes in. It has a singleton implementation, so even if you place the GlobalStorage on all scenes, it will alawys keep only one instance (deleting the others). And due to its _DontDestroyOnLoad_ behavior, it'll be available on all scenes. The GlobalStorage will not only store your variables. It'll also show them on Unity's Inspector Window, so you can keep track of everything that is being stored.
+That's where the GlobalStorage comes in. Check it out:
 
-## GlobalStorage usage is really simple
-
-To save some value on the storage:
-```
-GlobalStorage.Save("name", "John Doe");     // Saving strings.
-GlobalStorage.Save("age", 28);              // Saving integers, positive and negative.
-GlobalStorage.Save("experience", 473.32);   // Faving doubles/floats, positive and negative.
-GlobalStorage.Save("isRunning", true);      // Saving booleans, true or false.
-GlobalStorage.Save("status", playerStatus); // Saving objects. In this case, playerStatus is an instance of PlayerStatus class.
-```
-
-To load some value from the storage:
-```
-var name = GlobalStorage.Load<string>("name");             // Note that we need to cast
-var age = GlobalStorage.Load<int>("age");                  // the type of the object
-var experience = GlobalStorage.Load<double>("experience"); // being recovered from the
-var isRunning = GlobalStorage.Load<bool>("isRunning");     // storage. That's how the script
-var status =  GlobalStorage.Load<PlayerStatus>("status");  // knows how to treat the value.
-```
-
-To delete some value from the storage:
-```
-GlobalStorage.Delete("name");
-GlobalStorage.Delete("age");
-GlobalStorage.Delete("experience");
-GlobalStorage.Delete("isRunning");
-GlobalStorage.Delete("status");
-```
+[GlobalStorage](https://github.com/felladrin/unity3d-globalstorage) - *Unity3D Script to store persistent data in JSON format and watch them live on Inspector*.
 
 ## License
 
